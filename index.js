@@ -5,6 +5,8 @@ const { token } = require('./config.json')
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 
+const invite_rules = "Have you read our invitation policy? The full policy can be found here; a quick reminder of the most important points follows:\n1) When you invite someone, they attend their first event partially as your guest. We hope you’ll invite people who are trustworthy, fun to be around, and whose behavior aligns with our community values.\n2) We will give you an invitation link to this server that is good for one use for the next seven days. Don’t try to reuse links, and wait to generate the link until you’re ready to send it.\n3) When your invitee joins the server, they will be let into a welcome channel where they will need to let a moderator know who invited them and wait to be manually assigned a role and let in to the main server. This can take a few days, and we thank you for your patience!\nClick the button to confirm you’ve read all that."
+
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
   console.log('Ready!')
@@ -37,7 +39,7 @@ client.on('interactionCreate', async interaction => {
       interaction.editReply({ content: 'Expired', components: [] })
     })
 
-    await interaction.reply({ content: 'Rules', ephemeral: true, components: [row] })
+    await interaction.reply({ content: invite_rules, ephemeral: true, components: [row] })
   }
 })
 

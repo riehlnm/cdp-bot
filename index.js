@@ -44,7 +44,7 @@ client.on("guildMemberAdd", async (member) => {
 
   const invite = newInvites.find(i => i.uses > oldInvites.get(i.code));
   const logChannel = member.guild.channels.cache.find(channel => channel.name === "join-logs");
-  db.get('SELECT * FROM invites WHERE code = ?', invite.code, (_, row) => {
+  db.get('SELECT * FROM invites WHERE code = ?', invite.code, async (_, row) => {
     db.run('UPDATE invites SET invited = ? WHERE code = ?', member.user.id, code)
     const inviter_id = row?.inviter
     const inviter = await member.guild.members.fetch(inviter_id).displayName

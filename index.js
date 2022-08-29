@@ -9,7 +9,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 const invite_rules = "Have you read our invitation policy? The full policy can be found here; a quick reminder of the most important points follows:\n1) When you invite someone, they attend their first event partially as your guest. We hope you’ll invite people who are trustworthy, fun to be around, and whose behavior aligns with our community values.\n2) We will give you an invitation link to this server that is good for one use for the next seven days. Don’t try to reuse links, and wait to generate the link until you’re ready to send it.\n3) When your invitee joins the server, they will be let into a welcome channel where they will need to let a moderator know who invited them and wait to be manually assigned a role and let in to the main server. This can take a few days, and we thank you for your patience!\nClick the button to confirm you’ve read all that."
 
 // Initialize the invite cache
-const invites = new Collection();
+const invites = new Map();
 
 // A pretty useful method to create a delay without blocking the whole script.
 const wait = require("timers/promises").setTimeout;
@@ -24,7 +24,7 @@ client.on("ready", async () => {
     // Fetch all Guild Invites
     const firstInvites = await guild.invites.fetch();
     // Set the key as Guild ID, and create a map which has the invite code, and the number of uses
-    invites.set(guild.id, new Collection(firstInvites.map((invite) => [invite.code, invite.uses])));
+    invites.set(guild.id, new Map(firstInvites.map((invite) => [invite.code, invite.uses])));
   });
 });
 
